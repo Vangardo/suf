@@ -13,20 +13,20 @@ To run this app, you'll need:
 
 1. Clone this repository to your local machine.
 
-$ git clone https://github.com/Vangardo/suf.git
+    ```git clone https://github.com/Vangardo/suf.git```
 
 2. Navigate to the project directory.
 
-$ cd suf
+    ```cd suf```
 
 3. Create a virtual environment and activate it.
 
-$ python3 -m venv venv
-$ source venv/bin/activate
+    ```python3 -m venv venv```
+    ```source venv/bin/activate```
 
 4. Install the dependencies.
 
-$ pip install -r requirements.txt
+    ```pip install -r requirements.txt```
 
 ## Usage
 
@@ -34,11 +34,11 @@ $ pip install -r requirements.txt
 
 1. Activate your virtual environment.
 
-$ source venv/bin/activate
+    ```source venv/bin/activate```
 
 2. Run the app.
 
-$ uvicorn main:app --reload
+    ```uvicorn main:app --reload```
 
 3. Open your web browser and go to `http://localhost:8000`.
 
@@ -46,11 +46,11 @@ $ uvicorn main:app --reload
 
 1. Build the Docker image.
 
-$ docker build -t suf.
+    ```docker build -t suf.```
 
 2. Run the Docker container.
 
-$ docker run -p 8000:80 file-storage-app
+    ```docker run -p 8000:80 file-storage-app```
 
 3. Open your web browser and go to `http://localhost:8000`.
 
