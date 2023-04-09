@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Загрузка файла</title>
+    <style>
+        body {
+            background-color: #f2f2f2;
+            font-family: Arial, sans-serif;
+        }
+        form {
+            margin: auto;
+            text-align: center;
+            width: 50%;
+        }
+        input[type="file"] {
+            border-radius: 5px;
+            border: none;
+            box-shadow: 0px 0px 2px 0px #ccc;
+            padding: 10px;
+            width: 70%;
+        }
+        #upload-btn {
+            background-color: #4CAF50;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            padding: 10px 20px;
+            margin-top: 10px;
+            margin-bottom: 20px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        #upload-btn:hover {
+            background-color: #3e8e41;
+        }
+        #results {
+            background-color: white;
+            border-radius: 5px;
+            box-shadow: 0px 0px 2px 0px #ccc;
+            margin: auto;
+            padding: 20px;
+            text-align: center;
+            width: 50%;
+        }
+        #copy-btn {
+            background-color: #4CAF50;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            cursor: pointer;
+            margin-right: 10px;
+            padding: 10px 20px;
+            transition: background-color 0.3s ease;
+            float: left;
+        }
+        #copy-btn:hover {
+            background-color: #3e8e41;
+        }
+    </style>
+</head>
+<body>
+    <form>
+        <label for="file">Выберите файл:</label>
+        <input type="file" id="file" name="file"><br><br>
+        <button type="button" id="upload-btn">Загрузить</button>
+    </form>
+    <div id="results"></div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $('#upload-btn').click(function(){
+                var formData = new FormData();
+                var file = $('#file')[0].files[0];
+                formData.append('file', file);
+
+                var startTime = new Date().getTime();
+
+                $.ajax({
+                    url: '/uploadfile',
+                    type: 'POST',
+                    data: formData,
+                    contentType: false,
+                    processData: false,
+                    success: function(data){
+                        var endTime = new Date().getTime();
+                        var uploadTime = (endTime - startTime) / 1000;
+                        $('#results').html('<p>Время загрузки: ' + uploadTime.toFixed(2) + ' сек.</p><p>Ссылка на файл: <a href="' + data.file_link._url + '">' + data.file_name + '</a></p><button id="copy-btn">Скопировать ссылку</button>');
+
+                        $('#copy-btn').click(function(){
+                            var el = document.createElement('textarea');
+                            el.value = data.file_link._url;
+                            document.body.appendChild(el);
+                            el.select();
+                            document.execCommand('copy');
+                            document.body.removeChild(el);
+                            alert('Ссылка скопирована в буфер обмена!');
+                        });
+                    },
+                    error: function(xhr, status, error){
+                $('#results').html('<p style="color:red">Ошибка при загрузке файла: ' + xhr.responseText + '</p>');
+            }
+        });
+    });
+});
+    </script>
+</body>
+</html>
