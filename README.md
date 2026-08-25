@@ -46,11 +46,11 @@ To run this app, you'll need:
 
 1. Build the Docker image.
 
-    ```docker build -t suf.```
+    ```docker build -t suf .```
 
 2. Run the Docker container.
 
-    ```docker run -p 8000:80 file-storage-app```
+    ```docker run --rm -p 8000:80 suf```
 
 3. Open your web browser and go to `http://localhost:8000`.
 
